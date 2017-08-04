@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="com.common.news" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
+    <name>SAS Flights</name>
+    <description>
+        SAS Flights Schedule for Khartoum International Airport
+    </description>
+    <author email="omaralfarouk@hotmail.com" href="http://phonegap.com">
+        omyalpha
+    </author>
+    <content src="index.html" /> 
+	<icon src="icon.png" />
+	<access origin="*" />
+	<allow-intent href="*" />
+	<allow-navigation href="*" />
+
+	<gap:plugin name="cordova-plugin-whitelist" source="npm" />
+</widget>
