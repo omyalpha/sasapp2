@@ -33,6 +33,84 @@ $$(document).on('ajaxComplete', function (e) {
     myApp.hideIndicator();
 });
 
+$$(document).on("pageInit", function(e) {
+    var page = e.detail.page;
+	console.log('initialized');
+		mainView.router.load({
+		   url: 'pages/home.html',
+		   ignoreCache: true,
+		   reload: true
+		});
+	
+	// index page
+	if (page.name === 'index') {
+		console.log('Starting index page');	
+	}
+	
+	// departures page
+	if (page.name === 'departures') {
+	console.log('departures page loaded');
+	//var loadNews();
+		$(function () {
+		var htmlText ="";
+		console.log('222222222222222');
+		
+				$.ajax({
+						beforeSend: function() { myApp.showIndicator(); },
+						complete: function(){ myApp.hideIndicator(); },
+						url:'http://webhosting.sd/~sasapp/departures.php',
+						dataType: "jsonp",
+						jsonpCallback: "jsonCallback",
+						success:function jsonCallback(data){
+							//$("#news").val(data);
+							$.each(data, function(i, field){
+								htmlText += '<div class="list-block accordion-list">';
+								htmlText += '<ul>';
+								htmlText += '<li class="accordion-item"><a href="#" class="item-link item-content">';
+								htmlText += '<div class="item-inner">';
+								htmlText += '<div class="item-title"><img src="img/airlines/' + data[i].logoname + '" width="100" alt="' + data[i].logoalt + '"></div>';
+								htmlText += '</div></a>';
+								htmlText += '<div class="accordion-item-content">';
+								htmlText += '<div class="list-block">';
+								htmlText += '<ul>';
+								htmlText += '<li>';
+								htmlText += '<div class="item-content">';
+								htmlText += '<div class="item-media"><i class="icon material-icons">airplanemode_active</i></div>';
+								htmlText += '<div class="item-inner">';
+								htmlText += '<div class="row">';
+								htmlText += '<div class="col-50 smallfont">' + data[i].airline + ' ' + data[i].flight + '</div>';
+								htmlText += '<div class="col-50 smallfont">' + data[i].aAirportName + ' (' + data[i].aAirportCode + ')</div>';
+								htmlText += '<div class="col-50 smallfont">' + data[i].dDate + ' ' + data[i].dTime + '</div>';
+								htmlText += '<div class="col-50"><span class="badge bg-' + data[i].statuscolor + '">' + data[i].statusname + '</span></div>';
+								htmlText += '</div>';
+								htmlText += '</div>';
+								htmlText += '</div>';
+								htmlText += '</li>';
+								htmlText += '</ul>';
+								htmlText += '</div>';
+								htmlText += '</div>';
+								htmlText += '</li>';
+								htmlText += '</ul>';
+								htmlText += '</div>';
+							});
+							$("#deps").html(htmlText);
+							console.log("Done");
+							
+						},
+						error:function(XMLHttpRequest,textStatus,errorThrown){
+							alert("Failed Loading Deartures List");
+						}
+
+					});
+		});
+	}
+	/////////// end
+
+}), $(document).ready(function() {
+// enter here
+myApp.init();
+console.log('initialized with jquery');
+});
 // Callbacks for specific pages when it initialized
 /* ===== Modals Page events  ===== */
 myApp.onPageInit('modals', function (page) {
